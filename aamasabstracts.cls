@@ -35,8 +35,8 @@
 \usepackage{fancyhdr}
 \usepackage{vmargin}
 \usepackage{xstring}
-\usepackage{makeidx} 
-
+\usepackage{multind} 
+\makeindex{authors}
 
 \setmarginsrb           { 0.8in}  % left margin
                         { 0.6in}  % top margin
@@ -159,29 +159,37 @@
 	\addtocounter{sessionctr}{1}
 }
 
-\newcommand{\paper}[2]{ %title, authors
+%\newcommand*{\paperAuthor}[2]{
+%	\index{#2, #1}
+%}
+
+\newcommand*{\paper}[2]{ %title, authors
 	\vskip 0.5em	
 	\ifthenelse{\not\equal{\aamaspaperprefix}{}}{\textbf{\aamaspaperprefix--}}{}\textbf{\arabic{paperctr}\\#1}\\
 	\emph{#2}\par
 	\addtocounter{paperctr}{1}
 
 	%Complicated stuff to split down authors.
+	\addauthorstoindex{#2, }
 }
 
 \newcommand{\addauthorstoindex}[1]{
-	\ifthenelse{\StrCount{#1}}{, } > 0}{
+	\ifthenelse{\not\equal{\StrBefore{#1}{, }}{}}{
 		%Get the left most author
-		\def\thisAuthor{\StrBefore{#1}{, }}
-
+		\StrBefore{#1}{, }[\thisAuthor]
+		ta \thisAuthor
 		%Get their last name
 		\def\taFirstName{\StrBefore[\StrCount{\thisAuthor}{ }]{\thisAuthor}{ }}
 		\def\taLastName{\StrBehind[\StrCount{\thisAuthor}{ }]{\thisAuthor}{ }}
-		\index{\taLastName, \taFirstName}
-		\addauthorstoindex{\StrBehind{#1}{, }}}
+		\index{authors}{\taLastName, \taFirstName}
+		\addauthorstoindex{\StrBehind{#1}{, }}
+	}{}
 }
 		
 	
 \renewcommand{\backmatter}{
-	\ifthenelse{\value{inmulticol} > 0}{\end{multicols*}}{\setcounter{inmulticol}{0}}
+	\ifthenelse{\value{inmulticol} < 1}{\begin{multicols*}{2}}{}
+		\printindex[authors]
+	\end{multicols*}
 }
 		
