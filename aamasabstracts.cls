@@ -35,8 +35,8 @@
 \usepackage{fancyhdr}
 \usepackage{vmargin}
 \usepackage{xstring}
-\usepackage{multind} 
-\makeindex{authors}
+\usepackage{index} 
+\makeindex
 
 \setmarginsrb           { 0.8in}  % left margin
                         { 0.6in}  % top margin
@@ -68,10 +68,13 @@
 			\end{spacing}
 		{\Large \aamasdates\ $\bullet$\ \aamaslocation}
 		\vfill
-		{\huge Abstracts}
-		\end{centering}
+		\center{\huge Abstracts}
 		\vfill
 		%ifaamas logo
+		\end{centering}
+		\begin{flushright}
+			\includegraphics[width=4cm]{ifaamaslogo}
+		\end{flushright}
 		\pagebreak
 		\textbf{IFAAMAS}\\
 		International Foundation for Autonomous Agents and Multiagent Systems\\
@@ -170,26 +173,41 @@
 	\addtocounter{paperctr}{1}
 
 	%Complicated stuff to split down authors.
-	\addauthorstoindex{#2, }
+%	\addauthorstoindex{#2, }
 }
 
-\newcommand{\addauthorstoindex}[1]{
-	\ifthenelse{\not\equal{\StrBefore{#1}{, }}{}}{
-		%Get the left most author
-		\StrBefore{#1}{, }[\thisAuthor]
-		ta \thisAuthor
-		%Get their last name
-		\def\taFirstName{\StrBefore[\StrCount{\thisAuthor}{ }]{\thisAuthor}{ }}
-		\def\taLastName{\StrBehind[\StrCount{\thisAuthor}{ }]{\thisAuthor}{ }}
-		\index{authors}{\taLastName, \taFirstName}
-		\addauthorstoindex{\StrBehind{#1}{, }}
-	}{}
-}
+%\newcommand{\addauthorstoindex}[1]{
+%	param ``#1''
+%	\StrLen{#1}[\hstrln]
+%
+%	\StrBefore{#1}{, }[\thisAuthor]
+%	\StrBehind{#1}{, }[\nextAuthors]
+%	
+%	\StrLen{\nextAuthors}[\hstrlnna]
+%	length \hstrln
+%	nal \hstrlnna
+%	\ifthenelse{ \hstrln > 0 }{
+%		%Get the left most author
+%		ta \thisAuthor
+%		%Get their last name
+%		\StrCount{\thisAuthor}{ }[\hnospaces]
+%		ns \hnospaces
+%		\StrBefore[\hnospaces]{\thisAuthor}{ }[\hfn]
+%		fn \hfn
+%		\StrBehind[\hnospaces]{\thisAuthor}{ }[\hln]
+%		ln \hln
+%		\def\idxentry{\hln, \hfn}
+%		Indexing \idxentry
+%		\index{\edef\hln, \edef\hfn}
+%		na \nextAuthors
+%		\addauthorstoindex{\nextAuthors}
+%	}{}
+%}
 		
 	
 \renewcommand{\backmatter}{
 	\ifthenelse{\value{inmulticol} < 1}{\begin{multicols*}{2}}{}
-		\printindex[authors]
+		\printindex
 	\end{multicols*}
 }
 		
