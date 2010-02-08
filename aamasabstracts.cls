@@ -204,10 +204,11 @@
 %	}{}
 %}
 		
-	
+\let\oldbackmatter\backmatter
 \renewcommand{\backmatter}{
 	\ifthenelse{\value{inmulticol} < 1}{\begin{multicols*}{2}}{}
 		\printindex
 	\end{multicols*}
+	\oldbackmatter
 }
 		
