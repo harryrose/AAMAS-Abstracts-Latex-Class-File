@@ -21,6 +21,7 @@
 \newcommand{\paperprefix}[1]{\def\aamaspaperprefix{#1}}
 \paperprefix{}
 
+\let\chapter\section
 \def\dayrulewidth{0.1mm}
 \def\sessionrulewidth{0.1mm}
 \def\forceonecol{0}
@@ -35,8 +36,10 @@
 \usepackage{fancyhdr}
 \usepackage{vmargin}
 \usepackage{xstring}
-\usepackage{index} 
+%\usepackage{index} 
+\usepackage{makeidx}
 \makeindex
+\renewcommand{\indexname}{Authors Index}
 
 \setmarginsrb           { 0.8in}  % left margin
                         { 0.6in}  % top margin
@@ -162,53 +165,21 @@
 	\addtocounter{sessionctr}{1}
 }
 
-%\newcommand*{\paperAuthor}[2]{
-%	\index{#2, #1}
-%}
-
 \newcommand*{\paper}[2]{ %title, authors
 	\vskip 0.5em	
 	\ifthenelse{\not\equal{\aamaspaperprefix}{}}{\textbf{\aamaspaperprefix--}}{}\textbf{\arabic{paperctr}\\#1}\\
 	\emph{#2}\par
 	\addtocounter{paperctr}{1}
-
-	%Complicated stuff to split down authors.
-%	\addauthorstoindex{#2, }
 }
-
-%\newcommand{\addauthorstoindex}[1]{
-%	param ``#1''
-%	\StrLen{#1}[\hstrln]
-%
-%	\StrBefore{#1}{, }[\thisAuthor]
-%	\StrBehind{#1}{, }[\nextAuthors]
-%	
-%	\StrLen{\nextAuthors}[\hstrlnna]
-%	length \hstrln
-%	nal \hstrlnna
-%	\ifthenelse{ \hstrln > 0 }{
-%		%Get the left most author
-%		ta \thisAuthor
-%		%Get their last name
-%		\StrCount{\thisAuthor}{ }[\hnospaces]
-%		ns \hnospaces
-%		\StrBefore[\hnospaces]{\thisAuthor}{ }[\hfn]
-%		fn \hfn
-%		\StrBehind[\hnospaces]{\thisAuthor}{ }[\hln]
-%		ln \hln
-%		\def\idxentry{\hln, \hfn}
-%		Indexing \idxentry
-%		\index{\edef\hln, \edef\hfn}
-%		na \nextAuthors
-%		\addauthorstoindex{\nextAuthors}
-%	}{}
-%}
 		
 \let\oldbackmatter\backmatter
+
 \renewcommand{\backmatter}{
-	\ifthenelse{\value{inmulticol} < 1}{\begin{multicols*}{2}}{}
-		\printindex
-	\end{multicols*}
+	\ifthenelse{\value{inmulticol} > 0}{
+		\end{multicols*}}{}
 	\oldbackmatter
 }
-		
+
+\newcommand{\printauthorsindex}{
+	\printindex
+}

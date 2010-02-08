@@ -12,7 +12,7 @@ while(<>)
 		foreach $author (@_)
 		{
 			#split on the first space
-			if($author =~ m/^([^ ]+)[\s+](.*)$/)
+			if($author =~ m/^(.+)[\s+]([^ ]+)$/)
 			{
 				print "\\index{$2, $1}\n";
 			}
