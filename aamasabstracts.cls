@@ -42,10 +42,10 @@
 \renewcommand{\indexname}{Authors Index}
 
 \setmarginsrb           { 0.8in}  % left margin
-                        { 0.6in}  % top margin
+                        { 0.8in}  % top margin
                         { 0.8in}  % right margin
                         { 1.5in}  % bottom margin
-                        {  20pt}  % head height
+                        {  30pt}  % head height
                         {0.25in}  % head sep
                         {  20pt}  % foot height
                         { 0.3in}  % foot sep
@@ -107,11 +107,11 @@
 \renewcommand{\day}[1]{
 	\begin{center}
 		\begin{spacing}{0.5}
-			\rule{\linewidth}{\dayrulewidth}
-				\hfill{\textbf{\large #1}}\hfill\normalsize
-			\rule{\linewidth}{\dayrulewidth}
-		\end{spacing}
-	\end{center}
+			\rule{\linewidth}{\dayrulewidth}\nopagebreak
+				\hfill{\textbf{\large #1}}\hfill\nopagebreak
+			\rule{\linewidth}{\dayrulewidth}\nopagebreak
+		\end{spacing}\nopagebreak
+	\end{center}\nopagebreak
 	\setcounter{sessionctr}{1}
 }
 \makeatletter
@@ -120,7 +120,7 @@
 	\ifthenelse{\value{inmulticol} > 0}{\end{multicols*}}{}{}
 	\addcontentsline{toc}{section}{\textbf{#1}}
 	\begin{centering}
-	\OldSection*{#1}
+	\OldSection*{#1}\nopagebreak
 	\end{centering}
 	\ifthenelse{\forceonecol = 0}{
 	\begin{multicols*}{2}
@@ -128,12 +128,6 @@
 }
 \makeatother
 
-%\let\OldContents\tableofcontents
-%\renewcommand{\tableofcontents}{
-%	\def\forceonecol{1}
-%	\OldContents
-%	\def\forceonecol{0}
-%}
 \makeatletter
 \newcommand{\session}{ 
 	\@ifstar
@@ -144,8 +138,8 @@
 
 \newcommand{\sessionstar}[2]{
 	\vskip 1em
-	\textbf{\large #1}\\
-	\rule{\linewidth}{\sessionrulewidth}
+	\textbf{\large #1}\nopagebreak\\\nopagebreak
+	\rule{\linewidth}{\sessionrulewidth}\nopagebreak
 	\def\aamaspaperprefix{#2}
 	\addcontentsline{toc}{subsection}{#1}
 	\setcounter{paperctr}{1}
@@ -157,18 +151,18 @@
 
 \newcommand{\sessionnostar}[2]{
 	\vskip 1em
-	\textbf{\large Session \arabic{sessionctr}}\\
-	\textbf{\large #1}\\	
-	\rule{\linewidth}{\sessionrulewidth}
+	\textbf{\large Session \arabic{sessionctr}}\nopagebreak\\\nopagebreak
+	\textbf{\large #1}\nopagebreak\\\nopagebreak
+	\rule{\linewidth}{\sessionrulewidth}\nopagebreak
 	\addcontentsline{toc}{subsection}{Session \arabic{sessionctr} -- #1} %
-	Chair: \emph{#2}%
+	Chair: \emph{#2}%\nopagebreak
 	\addtocounter{sessionctr}{1}
 }
 
 \newcommand*{\paper}[2]{ %title, authors
 	\vskip 0.5em	
-	\ifthenelse{\not\equal{\aamaspaperprefix}{}}{\textbf{\aamaspaperprefix--}}{}\textbf{\arabic{paperctr}\\#1}\\
-	\emph{#2}\par
+	\ifthenelse{\not\equal{\aamaspaperprefix}{}}{\textbf{\aamaspaperprefix--}}{}\textbf{\arabic{paperctr}\\#1}\nopagebreak\\\nopagebreak
+	\emph{#2}\nopagebreak\par\nopagebreak
 	\addtocounter{paperctr}{1}
 }
 		
