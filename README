@@ -1,0 +1,79 @@
+Instructions for use of this class file
+=======================================
+
+	You will need to get an EPS version of the IFAAMAS logo, and place it in the directory
+	of the work you're trying to compile.  I will find whether I'm allowed to commit it to
+	git, but until I get permission I'm afraid you'll have to source it yourself (I simply
+	used a JPG from a previous abstract book and used the GIMP to convert it).
+
+	There are a couple of commands that you should call in the preamble.
+
+		\conferencenumber{ } - Takes one argument, which is the number of the conference
+					e.g \conferencenumber{10$^\matrhm{th}$}
+
+		\conferenceyear{ } - Takes one argument, which is the year of the conference
+					e.g \conferenceyear{2010}
+
+		\location{ } - Takes one argument, which is the city and country of the conference
+					e.g \location{Toronto, Canada}
+
+		\dates{ } - Takes one argument, which is the range of dates the conference is on
+					e.g \dates{10--14th May}
+
+		\isbn{ } - Takes one argument, which is the ISBN of the abstract book
+					e.g \isbn{123-4-12341234-1-2}
+
+
+	The following commands are defined for use within the document body.
+
+		\section{Title}
+			Places a heading horizontally centred in the page.
+
+		\day{Date}
+			Creates a heading denoting a new day.
+
+		\session{Topic}{Chair}
+			Creates a heading that specifies a new session on `Topic',
+			that is being chaired by `Chair'.
+
+		\session*{Title}{PaperPrefix}
+			Creates a session with title `Title', resets paper counters
+			to zero, and prefixes the numbers of papers defined after 
+			this command with PaperPrefix--.
+
+		\paper{Title}{Authors}
+			Creates a heading for a paper with title `Title', authored by
+			`Authors'.  The abstract of the paper should follow this command.
+
+		\backmatter
+			This should be placed at the end of the document before \printindex
+	
+Building the document
+=====================
+	
+	After long hours spent trying to get latex to build an authors index for me, I gave up
+	and decided just to write a PERL script that parses the document looking for \paper{}{} lines
+	then generating \index{} commands from the authors specified in that.
+
+	The script that does this is called expandAuthors.pl, which you use as follows
+	
+		cat myAbstracts.tex | expandAuthors.pl > myAbstracts_expandex.tex
+	
+	Simple (if all goes to plan).
+
+	There is another script called buildbook.sh, which you can use in the following manner
+		
+		buildbook.sh myAbstracts.tex
+
+	This will create a variety of files, mostly prefixed with book_.  The most exciting one
+	is book_expanded.dvi, which is the compiled version of your abstracts book.  You can convert
+	this to pdf using a tool such as dvipdfm.
+
+		dvipdfm book_expanded.dvi
+	
+	This script is very basic and assumes you've put all of your papers into one massive file 
+	(which isn't advisable) however if you keep watching this space no doubt I'll modify it to
+	work with multiple files when I come around to building the abstract books myself.  For now, 
+	you can use it to get an idea of how to build the document.
+
+	Good luck,  if you have any problems contact me at harry __ at __ harryrose.org

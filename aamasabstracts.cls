@@ -35,7 +35,7 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{vmargin}
-\usepackage{xstring}
+%\usepackage{xstring}
 %\usepackage{index} 
 \usepackage{makeidx}
 \makeindex
@@ -112,7 +112,7 @@
 			\rule{\linewidth}{\dayrulewidth}\nopagebreak
 		\end{spacing}\nopagebreak
 	\end{center}\nopagebreak
-	\setcounter{sessionctr}{1}
+	%\setcounter{sessionctr}{1}
 }
 \makeatletter
 \let\OldSection\section
